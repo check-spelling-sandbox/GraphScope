@@ -1,0 +1,35 @@
+# Public Keys
+-----BEGIN PUBLIC KEY-----
+-----END PUBLIC KEY-----
+
+# RSA Private Key
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+
+# GPG Public Key
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+-----END PGP PUBLIC KEY BLOCK-----
+
+# Certificates
+-----BEGIN CERTIFICATE-----
+-----END CERTIFICATE-----
+
+# Expected results
+List<String> expected =
+);
+
+# precompile.py
+targets.extend(
+with multiprocessing.Pool() as pool:
+
+# __all__
+__all__ = [
+]
+
+# cpplint.py
+HEADERS = frozenset([
+])
+
+# setup.py
+install_requires=[
+],
