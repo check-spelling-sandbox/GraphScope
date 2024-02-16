@@ -146,7 +146,7 @@ class AWSLauncher(Launcher):
             default="1.21",
         )
         config["instance_type"] = click.prompt(
-            "Worker node instance type, defalut", default="t2.micro"
+            "Worker node instance type, default", default="t2.micro"
         )
         config["node_num"] = click.prompt(
             "Worker node num, default", type=int, default=4
@@ -276,7 +276,7 @@ class AWSLauncher(Launcher):
                 # A waiter is something which polls AWS to find out if an operation
                 # has completed.
                 waiter = self._cf.get_waiter("stack_create_complete")
-                # Wait for stack creation to complet
+                # Wait for stack creation to complete
                 waiter.wait(StackName=vpc_name)
             except Exception as e:
                 # If waiter fails, that'll be the thing taking too long to deploy.

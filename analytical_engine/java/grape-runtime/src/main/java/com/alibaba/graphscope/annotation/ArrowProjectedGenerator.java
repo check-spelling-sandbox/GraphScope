@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * Class which add typespec to ffiGenBatch for arrowProjectedFragment. In annotation invoker, we
- * alread generated some classes, try to avoid regeneration.
+ * already generated some classes, try to avoid regeneration.
  * TODO(zhanglei): generate according to message strategy, if provided.
  */
 public class ArrowProjectedGenerator {
@@ -279,7 +279,7 @@ public class ArrowProjectedGenerator {
     private void addTemplate(String typeName, String... templates) {
         if (templates.length % 2 != 0) {
             throw new IllegalStateException(
-                    "Can not have odd number of template types " + String.join(",", templates));
+                    "Cannot have odd number of template types " + String.join(",", templates));
         }
         int num = templates.length;
         AnnotationSpec.Builder curBuilder = AnnotationSpec.builder(FFIGen.class);

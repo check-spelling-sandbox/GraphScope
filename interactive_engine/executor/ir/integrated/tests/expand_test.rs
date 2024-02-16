@@ -146,7 +146,7 @@ mod test {
 
     // g.V().outE().hasLabel("knows")
     #[test]
-    fn expand_oute_with_label_test() {
+    fn expand_out_e_with_label_test() {
         let query_param = query_params(vec![KNOWS_LABEL.into()], vec![], None);
         let expand_opr_pb = pb::EdgeExpand {
             v_tag: None,
@@ -172,7 +172,7 @@ mod test {
 
     // g.V().outE('knows', 'created')
     #[test]
-    fn expand_oute_with_many_labels_test() {
+    fn expand_out_e_with_many_labels_test() {
         let query_param = query_params(vec![KNOWS_LABEL.into(), CREATED_LABEL.into()], vec![], None);
         let expand_opr_pb = pb::EdgeExpand {
             v_tag: None,
@@ -202,7 +202,7 @@ mod test {
 
     // g.V().inE('knows') with required properties
     #[test]
-    fn expand_ine_with_label_property_test() {
+    fn expand_in_e_with_label_property_test() {
         let query_param = query_params(vec![KNOWS_LABEL.into()], vec!["weight".into()], None);
         let expand_opr_pb = pb::EdgeExpand {
             v_tag: None,
@@ -435,7 +435,7 @@ mod test {
 
     // g.V().inE('created').outV()
     #[test]
-    fn expand_ine_outv_test() {
+    fn expand_in_e_outv_test() {
         let expand_opr = pb::EdgeExpand {
             v_tag: None,
             direction: 1,
@@ -451,7 +451,7 @@ mod test {
             alias: None,
         };
 
-        let conf = JobConf::new("expand_ine_outv_test");
+        let conf = JobConf::new("expand_in_e_outv_test");
         let mut result = pegasus::run(conf, || {
             let expand = expand_opr.clone();
             let getv = getv_opr.clone();
@@ -479,7 +479,7 @@ mod test {
 
     // g.V().bothE('knows').otherV()
     #[test]
-    fn expand_bothe_otherv_test() {
+    fn expand_both_e_otherv_test() {
         let expand_opr = pb::EdgeExpand {
             v_tag: None,
             direction: 2,
@@ -495,7 +495,7 @@ mod test {
             alias: None,
         };
 
-        let conf = JobConf::new("expand_bothe_otherv_test");
+        let conf = JobConf::new("expand_both_e_otherv_test");
         let mut result = pegasus::run(conf, || {
             let expand = expand_opr.clone();
             let getv = getv_opr.clone();
@@ -523,7 +523,7 @@ mod test {
 
     // g.V().outE('knows').bothV()
     #[test]
-    fn expand_oute_bothv_test() {
+    fn expand_oute_both_v_test() {
         let expand_opr = pb::EdgeExpand {
             v_tag: None,
             direction: 0,
@@ -539,7 +539,7 @@ mod test {
             alias: None,
         };
 
-        let conf = JobConf::new("expand_oute_bothv_test");
+        let conf = JobConf::new("expand_oute_both_v_test");
         let mut result = pegasus::run(conf, || {
             let expand = expand_opr.clone();
             let getv = getv_opr.clone();
@@ -1034,7 +1034,7 @@ mod test {
 
     // g.V().outE().inV().hasLabel('person')
     #[test]
-    fn expand_ine_outv_label_filter_test() {
+    fn expand_in_e_outv_label_filter_test() {
         let expand_opr = pb::EdgeExpand {
             v_tag: None,
             direction: 0, // OutE
@@ -1050,7 +1050,7 @@ mod test {
             alias: None,
         };
 
-        let conf = JobConf::new("expand_ine_outv_haslabel_test");
+        let conf = JobConf::new("expand_in_e_outv_haslabel_test");
         let mut result = pegasus::run(conf, || {
             let expand = expand_opr.clone();
             let getv = getv_opr.clone();

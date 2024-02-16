@@ -227,7 +227,7 @@ void test_property_type(const char* uri_str) {
 
   GRIN_VERTEX_TYPE vt2 = grin_get_vertex_type_by_name(g, "person");
   if (vt2 == GRIN_NULL_VERTEX_TYPE) {
-    printf("(Wrong) vertex type of person can not be found\n");
+    printf("(Wrong) vertex type of person cannot be found\n");
   } else {
     const char* vt2_name = grin_get_vertex_type_name(g, vt2);
     printf("vertex type name: %s\n", vt2_name);
@@ -312,7 +312,7 @@ void test_property_type(const char* uri_str) {
   }
   GRIN_EDGE_TYPE et2 = grin_get_edge_type_by_name(g, "created");
   if (et2 == GRIN_NULL_EDGE_TYPE) {
-    printf("(Wrong) edge type of created can not be found\n");
+    printf("(Wrong) edge type of created cannot be found\n");
   } else {
     const char* et2_name = grin_get_edge_type_name(g, et2);
     printf("edge type name: %s\n", et2_name);
@@ -922,7 +922,7 @@ void test_topology_adjacent_list(const char* uri_str, GRIN_DIRECTION dir) {
     acnt++;
     grin_get_next_adjacent_list_iter(g, ali);
   }
-#ifdef GRIN_ENABLE_ADJAECENT_LIST_ARRAY
+#ifdef GRIN_ENABLE_ADJACENT_LIST_ARRAY
   assert(acnt == grin_get_adjacent_list_size(g, al));
 #endif
   grin_destroy_adjacent_list_iter(g, ali);

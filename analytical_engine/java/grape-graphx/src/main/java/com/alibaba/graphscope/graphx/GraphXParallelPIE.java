@@ -591,7 +591,7 @@ public class GraphXParallelPIE<VD, ED, MSG_T> {
             throws IOException, ClassNotFoundException {
         if (length < oldArray.getLength()) {
             throw new IllegalStateException(
-                    "dst array length can not be smaller than off heap array "
+                    "dst array length cannot be smaller than off heap array "
                             + length
                             + ", "
                             + oldArray.getLength());
@@ -630,7 +630,7 @@ public class GraphXParallelPIE<VD, ED, MSG_T> {
             PrimitiveTypedArray<T> oldArray, Class<? extends T> clz, int length) {
         if (length < oldArray.getLength()) {
             throw new IllegalStateException(
-                    "dst array length can not be smaller than off heap array "
+                    "dst array length cannot be smaller than off heap array "
                             + length
                             + ", "
                             + oldArray.getLength());
@@ -656,12 +656,12 @@ public class GraphXParallelPIE<VD, ED, MSG_T> {
     }
 
     private void fillFid2WorkerId(String str) {
-        String[] splited = str.split(";");
-        if (splited.length != fid2WorkerId.length) {
+        String[] split = str.split(";");
+        if (split.length != fid2WorkerId.length) {
             throw new IllegalStateException(
-                    "length neq " + splited.length + "," + fid2WorkerId.length);
+                    "length neq " + split.length + "," + fid2WorkerId.length);
         }
-        for (String tuple : splited) {
+        for (String tuple : split) {
             String[] tmp = tuple.split(":");
             if (tmp.length != 2) {
                 throw new IllegalStateException("length neq 2" + tmp.length);

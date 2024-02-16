@@ -107,7 +107,7 @@ class DegreeAssortativity
         std::vector<size_t> shape{1};
         ctx.set_shape(shape);
         ctx.assign(ctx.degree_assortativity);
-        VLOG(10) << "degree assortatity: " << ctx.degree_assortativity
+        VLOG(10) << "degree assortativity: " << ctx.degree_assortativity
                  << std::endl;
       }
     }
@@ -145,7 +145,7 @@ class DegreeAssortativity
    * @brief get the degree of vertex
    *
    * @param frag
-   * @param veretx
+   * @param vertex
    * @param type IN or OUT
    * @param ctx
    */

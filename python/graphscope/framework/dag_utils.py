@@ -293,7 +293,7 @@ def dynamic_to_arrow(graph):
             oid_type = type(node)
         elif oid_type != type(node):
             raise RuntimeError(
-                "The vertex type is not consistent {} vs {}, can not convert it to arrow graph".format(
+                "The vertex type is not consistent {} vs {}, cannot convert it to arrow graph".format(
                     str(oid_type), str(type(node))
                 )
             )
@@ -423,7 +423,7 @@ def report_graph(
 ):
     """Create report operation for nx graph.
 
-    This operation is used to simulate networkx graph reporting methods with variaty
+    This operation is used to simulate networkx graph reporting methods with variety
     report type and corresponding config parameters.
 
     Args:
@@ -736,7 +736,7 @@ def create_subgraph(graph, nodes=None, edges=None):
 
 
 def create_unload_op(session_id, op_type, inputs):
-    """Uility method to create a unload `Operation` based on op type and op."""
+    """Utility method to create a unload `Operation` based on op type and op."""
     op = Operation(
         session_id,
         op_type,

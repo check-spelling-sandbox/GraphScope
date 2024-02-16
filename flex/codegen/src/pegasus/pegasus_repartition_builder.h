@@ -31,23 +31,23 @@ limitations under the License.
 
 namespace gs {
 namespace pegasus {
-class PepartitionOpBuilder {
+class PePartitionOpBuilder {
  public:
-  PepartitionOpBuilder(BuildingContext& ctx) : ctx_(ctx) {}
+  PePartitionOpBuilder(BuildingContext& ctx) : ctx_(ctx) {}
 
-  PepartitionOpBuilder& operator_index(const int32_t operator_index) {
+  PePartitionOpBuilder& operator_index(const int32_t operator_index) {
     operator_index_ = operator_index;
     return *this;
   }
 
-  PepartitionOpBuilder& input_tag(const int32_t input_tag) {
+  PePartitionOpBuilder& input_tag(const int32_t input_tag) {
     in_tag_ = input_tag;
     return *this;
   }
 
   // return make_project code and call project code.
   std::string Build() const {
-    boost::format repartition_fmter(
+    boost::format repartition_formatter(
         "let stream_%1% = stream_%2%.repartition(move |input| {\n"
         "Ok(get_partition(&input.%3%, workers as usize, "
         "pegasus::get_servers_len()))\n"
@@ -58,8 +58,8 @@ class PepartitionOpBuilder {
     } else {
       index = ctx_.GetAliasIndex(in_tag_);
     }
-    repartition_fmter % operator_index_ % (operator_index_ - 1) % index;
-    return repartition_fmter.str();
+    repartition_formatter % operator_index_ % (operator_index_ - 1) % index;
+    return repartition_formatter.str();
   }
 
  private:
@@ -72,7 +72,7 @@ static std::string BuildRepartitionOp(
     BuildingContext& ctx, int32_t operator_index,
     const physical::Repartition& repartition_pb,
     const physical::PhysicalOpr::MetaData& meta_data) {
-  PepartitionOpBuilder builder(ctx);
+  PePartitionOpBuilder builder(ctx);
   if (repartition_pb.to_another().has_shuffle_key()) {
     builder.input_tag(repartition_pb.to_another().shuffle_key().value());
   }

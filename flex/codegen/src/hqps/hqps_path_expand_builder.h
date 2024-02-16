@@ -180,7 +180,7 @@ class PathExpandOpBuilder {
         }
       }
       VLOG(10) << "get vertex labels:" << gs::to_string(dst_vertex_labels_);
-      CHECK(!get_v_pb.params().has_predicate()) << "currently don't suppport "
+      CHECK(!get_v_pb.params().has_predicate()) << "currently don't support "
                                                    "getv with condition";
       // std::tie(get_v_expr_call_code, get_v_opt, getv_opt_) =
       // BuildGetVOpt(ctx_, get_v_pb);
@@ -194,7 +194,7 @@ class PathExpandOpBuilder {
       // build edge_expand_opt
       auto& params = edge_expand_pb.params();
       auto expand_opt = edge_expand_pb.expand_opt();
-      CHECK(dst_vertex_labels_.size() > 0) << "no dst lables found";
+      CHECK(dst_vertex_labels_.size() > 0) << "no dst labels found";
 
       if (params.tables().size() < 1) {
         throw std::runtime_error("no edge labels found");
@@ -292,7 +292,7 @@ class PathExpandOpBuilder {
   }
 
   PathExpandOpBuilder& condition(const common::Expression& condition_pb) {
-    LOG(WARNING) << "Skiped for path expand with condition";
+    LOG(WARNING) << "Skipped for path expand with condition";
     return *this;
   }
 
@@ -337,19 +337,19 @@ class PathExpandOpBuilder {
 
     auto append_opt = res_alias_to_append_opt(out_tag_id_);
     auto input_col_str = format_input_col(in_tag_id_);
-    boost::format formater("");
+    boost::format formatter("");
     if (output_to_vertices_) {
-      formater = boost::format(PATH_EXPAND_V_OP_TEMPLATE_STR);
+      formatter = boost::format(PATH_EXPAND_V_OP_TEMPLATE_STR);
     } else {
-      formater = boost::format(PATH_EXPAND_PATH_OP_TEMPLATE_STR);
+      formatter = boost::format(PATH_EXPAND_PATH_OP_TEMPLATE_STR);
     }
 
-    formater % edge_expand_opt_ % getv_opt_code_ % path_expand_opt_var %
+    formatter % edge_expand_opt_ % getv_opt_code_ % path_expand_opt_var %
         edge_expand_opt_name_ % getv_opt_name_ % range_lower_value %
         range_upper_value % next_ctx_name % append_opt % input_col_str %
         ctx_.GraphVar() % prev_ctx_name % path_expand_opt_var;
 
-    return formater.str();
+    return formatter.str();
   }
 
  private:
@@ -369,8 +369,8 @@ class PathExpandOpBuilder {
 // get_v_opt
 // path_expand_opt
 // op_code.
-// NOTE: we currenly only support path expand v, the in_tag can be fetch fromn
-// path_expand_pb itself, while the res_alilas shall be fetch from the later
+// NOTE: we currently only support path expand v, the in_tag can be fetch from
+// path_expand_pb itself, while the res_alias shall be fetch from the later
 // get_v
 template <typename LabelT>
 static std::string BuildPathExpandVOp(

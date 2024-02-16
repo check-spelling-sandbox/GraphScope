@@ -96,7 +96,7 @@ void output_nd_array(const grape::CommSpec& comm_spec,
         assembled_ostream << v << std::endl;
       }
     } else {
-      LOG(FATAL) << "Unregonizable data type " << data_type_expected;
+      LOG(FATAL) << "Unrecognizable data type " << data_type_expected;
     }
 
     VLOG(1) << "output complete: " << oarc.Empty() << output_path;
@@ -158,7 +158,7 @@ void output_data_frame(const grape::CommSpec& comm_spec,
         assembled_col2_ostream << data << std::endl;
       }
     } else {
-      LOG(FATAL) << "Unregonizable data type " << expected_data_type;
+      LOG(FATAL) << "Unrecognizable data type " << expected_data_type;
     }
     assembled_col2_ostream.close();
 
@@ -477,7 +477,7 @@ void Run(vineyard::Client& client, const grape::CommSpec& comm_spec,
     std::string selector_string;
     std::string selectors_string;
     if (run_property == 0) {
-      // labeled_vetex_data
+      // labeled_vertex_data
       selector_string = "r:label0";
       {
         std::vector<std::pair<std::string, std::string>> selector_list;
@@ -521,7 +521,7 @@ void Run(vineyard::Client& client, const grape::CommSpec& comm_spec,
       std::string selector_string;
       std::string selectors_string;
       if (run_property == 0) {
-        // vetex_data
+        // vertex_data
         selector_string = "r";
         {
           std::vector<std::pair<std::string, std::string>> selector_list;

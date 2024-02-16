@@ -105,11 +105,11 @@ class Md5Stream {
   void Get(uint8_t hash[16]);
 
  private:
-  /** @brief Initailize class members
+  /** @brief Initialize class members
    */
-  void Initailize();
+  void Initialize();
 
-  bool mLittleEndian;     /// true if litte endian, false if big endian
+  bool mLittleEndian;     /// true if little endian, false if big endian
   uint8_t mBuf[64];       /// hold remained input stream
   uint64_t mBufPosition;  /// indicate the position of stream end in buf
   uint32_t mH[4];         /// hold inter result
@@ -282,7 +282,7 @@ inline void MD5::update(const byte* input, size_t length) {
 }
 
 /* MD5 finalization. Ends an MD5 message-_digest operation, writing the
-the message _digest and zeroizing the context.
+the message _digest and zeroing the context.
 */
 inline void MD5::final() {
   byte bits[8];

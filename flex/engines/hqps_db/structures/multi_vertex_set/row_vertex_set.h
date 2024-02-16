@@ -44,7 +44,7 @@ void fillBuiltinPropsImpl(
            << ", eq: " << gs::to_string(std::is_same_v<cur_prop, my_prop>);
   if constexpr (std::is_same_v<cur_prop, my_prop>) {
     if (prop_name == set_prop_names[My_Is]) {
-      VLOG(10) << "Found builin property " << prop_name;
+      VLOG(10) << "Found built-in property " << prop_name;
       CHECK(repeat_array.size() == datas.size());
       size_t ind = 0;
       for (size_t i = 0; i < repeat_array.size(); ++i) {
@@ -1139,7 +1139,7 @@ class RowVertexSetImpl {
                          repeat_array);
   }
 
-  // fill builtin props withour repeat array.
+  // fill builtin props without repeat array.
   template <typename... PropT>
   void fillBuiltinProps(std::vector<std::tuple<PropT...>>& tuples,
                         const PropNameArray<PropT...>& prop_names) {
@@ -1409,13 +1409,13 @@ class RowVertexSetImpl<LabelT, VID_T, grape::EmptyType> {
   void fillBuiltinProps(std::vector<std::tuple<PropT...>>& tuples,
                         const PropNameArray<PropT...>& prop_names,
                         const std::vector<offset_t>& repeat_array) const {
-    VLOG(10) << "Skip filling bulitin props for empty prop row vertex set";
+    VLOG(10) << "Skip filling built-in props for empty prop row vertex set";
   }
 
   template <typename... PropT>
   void fillBuiltinProps(std::vector<std::tuple<PropT...>>& tuples,
                         const PropNameArray<PropT...>& prop_names) const {
-    VLOG(10) << "Skip filling bulitin props for empty prop row vertex set";
+    VLOG(10) << "Skip filling built-in props for empty prop row vertex set";
   }
 
   // In places
@@ -1427,14 +1427,14 @@ class RowVertexSetImpl<LabelT, VID_T, grape::EmptyType> {
                                                   std::move(new_datas));
   }
 
-  // Removed_indices is not repest to current set's indices.
+  // Removed_indices is not with respect to current set's indices.
   // It refer to the indices_range's index.
   // removed = [1]
   // indices_range = [0, 3, 5, 8]
   // Then we should remove eles in [3,5)
   // indices became
   // [0, 3, 6],
-  // num _elemenst 8 -> 6
+  // num _elements 8 -> 6
   // return the new offset range
   std::vector<offset_t> SubSetWithRemovedIndices(
       std::vector<size_t>& removed_indices,

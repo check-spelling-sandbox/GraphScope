@@ -24,11 +24,11 @@ enum Code {
   // Timeout, used when an operation fail to return result in an specific time.
   TIMEOUT_ERROR = 1;
 
-  // Required resources can not be found.
+  // Required resources cannot be found.
   NOT_FOUND_ERROR = 2;
 
   // Connection error with client.
-  // e.g. multiple client connnect to coordinator at the same time or
+  // e.g. multiple client connect to coordinator at the same time or
   // failed to launch engine locally.
   CONNECTION_ERROR = 3;
 
@@ -44,7 +44,7 @@ enum Code {
   // Error raised when running UDF application
   UDF_INTERNAL_ERROR = 7;
 
-  // Resources temporary unavaiable.
+  // Resources temporary unavailable.
   UNAVAILABLE_ERROR = 8;
 
   // Arguments of operations is invalid / in a wrong format.

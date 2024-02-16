@@ -38,11 +38,11 @@ import graphscope
 PATTERN_TRANSFER = [("-[*]-", "-[]-")]
 
 Cases = """Right Cases:
-querys: 列举出鲁迅的一个别名可以吗？ answer:match (:ENTITY{name:'鲁迅'})<--(h)-[:Relationship{name:'别名'}]->(q) return distinct q.name limit 1
-querys: 我们常用的301SH不锈钢带的硬度公差是多少，你知道吗？ answers:match(p:ENTITY{name:'301SH不锈钢带'})-[:Relationship{name:'硬度公差'}]-> (q) return q.name
+queries: 列举出鲁迅的一个别名可以吗？ answer:match (:ENTITY{name:'鲁迅'})<--(h)-[:Relationship{name:'别名'}]->(q) return distinct q.name limit 1
+queries: 我们常用的301SH不锈钢带的硬度公差是多少，你知道吗？ answers:match(p:ENTITY{name:'301SH不锈钢带'})-[:Relationship{name:'硬度公差'}]-> (q) return q.name
 Wrong Cases:
-querys: 12344加油这首歌真好听，你知道歌曲原唱是谁吗？ answers: MATCH (a:Actor)-[:ACTED_IN]->(m:Movie) WHERE m.name = '12345加油' RETURN a.name
-querys: 七宗梦是什么时候上映的？ answers: MATCH (a:Actor)-[:ACTED_IN]->(m:Movie) WHERE m.name = '七宗梦' RETURN a.name LIMIT 30"""
+queries: 12344加油这首歌真好听，你知道歌曲原唱是谁吗？ answers: MATCH (a:Actor)-[:ACTED_IN]->(m:Movie) WHERE m.name = '12345加油' RETURN a.name
+queries: 七宗梦是什么时候上映的？ answers: MATCH (a:Actor)-[:ACTED_IN]->(m:Movie) WHERE m.name = '七宗梦' RETURN a.name LIMIT 30"""
 
 
 INTERMEDIATE_STEPS_KEY = "intermediate_steps"
@@ -56,14 +56,14 @@ Instructions:
 Note: Do not include any explanations or apologies in your responses.
 Do not respond to any questions that might ask anything else than for you to construct a Cypher statement.
 Do not include any text except the generated Cypher statement.
-You must use the relaship or property shown in the schema!!! do not use other keys!!!
-You must use the relaship or property shown in the schema!!! do not use other keys!!!
-You must use the relaship or property shown in the schema!!! do not use other keys!!!
-你必须使用Sechema中出现的关键词！！！
+You must use the relation or property shown in the schema!!! do not use other keys!!!
+You must use the relation or property shown in the schema!!! do not use other keys!!!
+You must use the relation or property shown in the schema!!! do not use other keys!!!
+你必须使用Schema中出现的关键词！！！
 
 The question is:
 {question}
-You must use the relaship or property shown in the schema!!! do not use other keys!!!"""
+You must use the relation or property shown in the schema!!! do not use other keys!!!"""
 CYPHER_GENERATION_PROMPT = PromptTemplate(
     input_variables=["schema", "question", "cases"], template=CYPHER_GENERATION_TEMPLATE
 )
@@ -73,10 +73,10 @@ CHECK_SCHEMA_TEMPLATE = """Task: Check the schema
 {query}
 Schema:
 {schema}
-Check the properities and relashions in the query, replace all the keywards that did not shown in the schema!!!
-Check the properities and relashions in the query, replace all the keywards that did not shown in the schema!!!
-Check the properities and relashions in the query, replace all the keywards that did not shown in the schema!!!
-if correct, return the origianl query!!!
+Check the properties and relations in the query, replace all the keywords that did not shown in the schema!!!
+Check the properties and relations in the query, replace all the keywords that did not shown in the schema!!!
+Check the properties and relations in the query, replace all the keywords that did not shown in the schema!!!
+if correct, return the original query!!!
 Note: Do not include any explanations or apologies in your responses.
 Do not respond to any questions that might ask anything else than for you to construct a Cypher statement.
 Do not include any text except the generated Cypher statement.

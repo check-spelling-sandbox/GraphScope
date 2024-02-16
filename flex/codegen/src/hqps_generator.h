@@ -123,7 +123,7 @@ bool simple_get_v(const physical::GetV& get_v_op) {
   return true;
 }
 
-bool intermeidate_edge_op(const physical::EdgeExpand& expand_op) {
+bool intermediate_edge_op(const physical::EdgeExpand& expand_op) {
   if (!expand_op.has_alias() || expand_op.alias().value() == -1) {
     return true;
   }
@@ -181,7 +181,7 @@ class QueryGenerator {
       : ctx_(ctx), plan_(plan) {}
 
   std::string GenerateQuery() {
-    // During generate query body, we will track the parameteres
+    // During generate query body, we will track the parameters
     // And also generate the expression for needed
     std::string query_code = build_query_code();
     std::string expr_code;
@@ -198,12 +198,12 @@ class QueryGenerator {
     std::string decoding_params_code, decoded_params_str;
     std::tie(decoding_params_code, decoded_params_str) =
         decode_params_from_decoder(ctx_.GetParameterVars());
-    boost::format formater(QUERY_TEMPLATE_STR);
-    formater % ctx_.GetGraphHeader() % expr_code % ctx_.GetQueryClassName() %
+    boost::format formatter(QUERY_TEMPLATE_STR);
+    formatter % ctx_.GetGraphHeader() % expr_code % ctx_.GetQueryClassName() %
         ctx_.GetGraphInterface() % ctx_.GetQueryRet() % ctx_.GraphVar() %
         dynamic_vars_str % query_code % decoding_params_code %
         decoded_params_str;
-    return formater.str();
+    return formatter.str();
   }
 
   // Generate a subtask for a subplan
@@ -320,7 +320,7 @@ class QueryGenerator {
 
       case physical::PhysicalOpr::Operator::kEdge: {  // edge expand
         physical::EdgeExpand real_edge_expand = opr.edge();
-        // try to use infomation from later operator
+        // try to use information from later operator
         std::vector<LabelT> dst_vertex_labels;
         if (i + 1 < size) {
           auto& get_v_op_opr = plan_.plan(i + 1).opr();
@@ -331,9 +331,9 @@ class QueryGenerator {
 
             if (FUSE_EDGE_GET_V) {
               if (simple_get_v(get_v_op) &&
-                  intermeidate_edge_op(real_edge_expand)) {
+                  intermediate_edge_op(real_edge_expand)) {
                 CHECK(dst_vertex_labels.size() > 0);
-                VLOG(10) << "When fuseing edge+get_v, get_v has labels: "
+                VLOG(10) << "When fusing edge+get_v, get_v has labels: "
                          << gs::to_string(dst_vertex_labels);
                 build_fused_edge_get_v<LabelT>(ctx_, ss, real_edge_expand,
                                                meta_datas[0], get_v_op,
@@ -341,7 +341,7 @@ class QueryGenerator {
                 LOG(INFO) << "Fuse edge expand and get_v since get_v is simple";
                 i += 1;
                 break;
-              } else if (intermeidate_edge_op(real_edge_expand)) {
+              } else if (intermediate_edge_op(real_edge_expand)) {
                 LOG(INFO) << "try to fuse edge expand with complex get_v, take "
                              "take the get_v' vertex label";
               } else {
@@ -409,7 +409,7 @@ class QueryGenerator {
 
       case physical::PhysicalOpr::Operator::kGroupBy: {
         // auto& meta_data = meta_datas[0];
-        // meta_data is currenly not used in groupby.
+        // meta_data is currently not used in groupby.
         physical::PhysicalOpr::MetaData meta_data;
         auto& group_by_op = opr.group_by();
         if (group_by_op.mappings_size() > 0) {
@@ -538,7 +538,7 @@ class QueryGenerator {
 };
 
 // When building a join op, we need to consider the following cases:
-// 0. tag_id to tag_ind mapping, two plan shoud keep different mappings
+// 0. tag_id to tag_ind mapping, two plan should keep different mappings
 // const physical::PhysicalOpr::MetaData& meta_data
 template <typename LabelT>
 static std::array<std::string, 4> BuildJoinOp(
@@ -678,7 +678,7 @@ static std::string BuildApplyOp(
     auto new_building_ctx = ctx.CreateSubTaskContext();
     auto sub_task_generator =
         QueryGenerator<LabelT>(new_building_ctx, sub_plan);
-    // QueryGenrator<LabelT> sub_task_generator(new_building_ctx, sub_plan_);
+    // QueryGenerator<LabelT> sub_task_generator(new_building_ctx, sub_plan_);
     // gen a lambda function.
     lambda_func_name = ctx.GetNextLambdaFuncName();
     std::stringstream inner_ss;

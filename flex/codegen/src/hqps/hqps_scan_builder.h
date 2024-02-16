@@ -78,7 +78,7 @@ class ScanOpBuilder {
   ScanOpBuilder& scanOpt(const physical::Scan::ScanOpt& opt) {
     if (opt != physical::Scan::ScanOpt::Scan_ScanOpt_VERTEX) {
       throw std::runtime_error(
-          std::string("Currently only suppor from vertex"));
+          std::string("Currently only support from vertex"));
     }
     scan_opt_ = opt;
     return *this;
@@ -108,7 +108,7 @@ class ScanOpBuilder {
       // labels.
       std::vector<int32_t> expr_label_ids;
       if (try_to_get_label_ids_from_expr(predicate, expr_label_ids)) {
-        // join expr_label_ids with table_lable_ids;
+        // join expr_label_ids with table_label_ids;
         VLOG(10) << "Found label ids in expr: "
                  << gs::to_string(expr_label_ids);
         intersection(labels_ids_, expr_label_ids);
@@ -235,20 +235,20 @@ class ScanOpBuilder {
     auto append_opt = res_alias_to_append_opt(res_alias_);
 
     if (label_ids.size() == 1) {
-      boost::format formater(SCAN_OP_WITH_OID_ONE_LABEL_TEMPLATE_STR);
-      formater % next_ctx_name % append_opt % oid_type_name % ctx_.GraphVar() %
+      boost::format formatter(SCAN_OP_WITH_OID_ONE_LABEL_TEMPLATE_STR);
+      formatter % next_ctx_name % append_opt % oid_type_name % ctx_.GraphVar() %
           label_ids[0] % oid;
-      return formater.str();
+      return formatter.str();
     } else {
-      boost::format formater(SCAN_OP_WITH_OID_MUL_LABEL_TEMPLATE_STR);
+      boost::format formatter(SCAN_OP_WITH_OID_MUL_LABEL_TEMPLATE_STR);
       std::stringstream ss;
       for (size_t i = 0; i + 1 < label_ids.size(); ++i) {
         ss << std::to_string(label_ids[i]) << ", ";
       }
       ss << std::to_string(label_ids[label_ids.size() - 1]);
-      formater % next_ctx_name % append_opt % ctx_.GraphVar() %
+      formatter % next_ctx_name % append_opt % ctx_.GraphVar() %
           label_ids.size() % ss.str() % oid;
-      return formater.str();
+      return formatter.str();
     }
   }
 
@@ -269,10 +269,10 @@ class ScanOpBuilder {
       }
       label_ids_str = ss.str();
     }
-    boost::format formater(SCAN_OP_TEMPLATE_NO_EXPR_STR);
-    formater % ctx_.GetCurCtxName() % res_alias_to_append_opt(res_alias_) %
+    boost::format formatter(SCAN_OP_TEMPLATE_NO_EXPR_STR);
+    formatter % ctx_.GetCurCtxName() % res_alias_to_append_opt(res_alias_) %
         ctx_.GraphVar() % label_ids_str;
-    return formater.str();
+    return formatter.str();
   }
 
   std::string scan_with_expr(const std::vector<int32_t>& label_ids,
@@ -298,11 +298,11 @@ class ScanOpBuilder {
       label_ids_str = ss.str();
     }
 
-    boost::format formater(SCAN_OP_TEMPLATE_STR);
-    formater % expr_var_name % expr_func_name % expr_construct_params %
+    boost::format formatter(SCAN_OP_TEMPLATE_STR);
+    formatter % expr_var_name % expr_func_name % expr_construct_params %
         selectors_str % next_ctx_name % res_alias_to_append_opt(res_alias_) %
         ctx_.GraphVar() % label_ids_str;
-    return formater.str();
+    return formatter.str();
   }
 
   BuildingContext& ctx_;
