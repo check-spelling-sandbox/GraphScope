@@ -104,7 +104,7 @@ def _parse_user_app(java_app_class: str, java_jar_full_path: str):
         elif line.find("ParallelAppBase") != -1:
             _java_app_type = "parallel_simple"
         elif line.find("Error") != -1:
-            raise Exception("Error occured in verifying user app")
+            raise Exception("Error occurred in verifying user app")
         elif line.find("TypeParams") != -1:
             _frag_param_str = line.split(":")[-1].strip()
         elif line.find("ContextType") != -1:
@@ -120,17 +120,17 @@ def _parse_user_app(java_app_class: str, java_jar_full_path: str):
     return _java_app_type, _frag_param_str, _java_inner_context_type
 
 
-def _type_param_consistent(graph_actucal_type_param, java_app_type_param):
+def _type_param_consistent(graph_actual_type_param, java_app_type_param):
     if java_app_type_param == "java.lang.Long":
-        if graph_actucal_type_param in {"uint64_t", "int64_t"}:
+        if graph_actual_type_param in {"uint64_t", "int64_t"}:
             return True
         return False
     if java_app_type_param == "java.lang.Double":
-        if graph_actucal_type_param in {"double"}:
+        if graph_actual_type_param in {"double"}:
             return True
         return False
     if java_app_type_param == "java.lang.Integer":
-        if graph_actucal_type_param in {"int32_t", "uint32_t"}:
+        if graph_actual_type_param in {"int32_t", "uint32_t"}:
             return True
         return False
     return False
@@ -139,7 +139,7 @@ def _type_param_consistent(graph_actucal_type_param, java_app_type_param):
 class JavaApp(AppAssets):
     """A class represents a java app assert node in a DAG that holds the jar file.
 
-    It holds neccessary resouces to run a java app, including java class path, the gar
+    It holds necessary resources to run a java app, including java class path, the gar
     file which consists jar and configuration yaml, and the specified java class.
     On creating a JavaApp, graphscope will try to load the specified java class, and parse
     the Base class for your app, and the base class for your Context Class. This operation
@@ -215,14 +215,14 @@ class JavaApp(AppAssets):
 
     # Override is_compatible to make sure type params of graph consists with java app.
     def is_compatible(self, graph):
-        splited = graph.template_str.split("<")
+        split = graph.template_str.split("<")
         java_app_type_params = self.frag_param_str.split(",")
         num_type_params = 0
-        if len(splited) != 2:
+        if len(split) != 2:
             raise Exception(
-                "Unrecoginizable graph template str: {}".format(graph.template_str)
+                "Unrecognizable graph template str: {}".format(graph.template_str)
             )
-        if splited[0] == "vineyard::ArrowFragment":
+        if split[0] == "vineyard::ArrowFragment":
             if self.java_app_type.find("property") == -1:
                 logger.error("Expected property app")
                 return False
@@ -230,7 +230,7 @@ class JavaApp(AppAssets):
                 logger.error("Expected one type params.")
                 return False
             num_type_params = 1
-        if splited[1] == "gs::ArrowProjectedFragment":
+        if split[1] == "gs::ArrowProjectedFragment":
             if self.java_app_type.find("simple") == -1:
                 logger.error("Expected simple app")
                 return False
@@ -238,7 +238,7 @@ class JavaApp(AppAssets):
                 logger.error("Expected 4 type params")
                 return False
             num_type_params = 4
-        graph_actual_type_params = splited[1][:-1].split(",")
+        graph_actual_type_params = split[1][:-1].split(",")
         for i in range(0, num_type_params):
             graph_actual_type_param = graph_actual_type_params[i]
             java_app_type_param = java_app_type_params[i]
@@ -304,7 +304,7 @@ class JavaApp(AppAssets):
 
 
 class JavaAppDagNode(AppDAGNode):
-    """retrict app assets to javaAppAssets"""
+    """restrict app assets to javaAppAssets"""
 
     def __init__(self, graph: Graph, app_assets: JavaApp):
         self._graph = graph
@@ -312,7 +312,7 @@ class JavaAppDagNode(AppDAGNode):
         self._session = graph.session
         if not self._app_assets.is_compatible(self._graph):
             raise Exception(
-                "No compactiable app and graph: {} and {}".format(
+                "No compatible app and graph: {} and {}".format(
                     self._app_assets.java_app_type, self._graph.template_str
                 )
             )

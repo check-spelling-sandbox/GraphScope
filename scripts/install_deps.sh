@@ -2,7 +2,7 @@
 #
 # A script to install dependencies of GraphScope.
 # TODO: check dependencies revise
-# TODO: install depedencies faster
+# TODO: install dependencies faster
 
 set -e
 set -o pipefail
@@ -21,7 +21,7 @@ readonly OUTPUT_ENV_FILE="${HOME}/.graphscope_env"
 IS_IN_WSL=false && [[ ! -z "${IS_WSL}" || ! -z "${WSL_DISTRO_NAME}" ]] && IS_IN_WSL=true
 readonly IS_IN_WSL
 DEPS_PREFIX="/usr/local"
-BASIC_PACKGES_TO_INSTALL=
+BASIC_PACKAGES_TO_INSTALL=
 PLATFORM=
 OS_VERSION=
 VERBOSE=false
@@ -46,7 +46,7 @@ succ() {
 }
 
 ##########################
-# Output useage information.
+# Output usage information.
 # Globals:
 #   None
 # Arguments:
@@ -64,7 +64,7 @@ cat <<END
     --verbose            Print the debug logging information
     --k8s                Install the dependencies for running GraphScope on k8s locally
     --dev                Install the dependencies for build GraphScope on local
-    --grape-jdk          Install the dependecies for GraphScope grape jdk on local
+    --grape-jdk          Install the dependencies for GraphScope grape jdk on local
     --cn                 Use tsinghua mirror for brew when install dependencies on macOS
 END
 }
@@ -119,7 +119,7 @@ get_os_version() {
   readonly OS_VERSION
 }
 
-# Functions to install dependencies of k8s evironment.
+# Functions to install dependencies of k8s environment.
 check_os_compatibility_k8s() {
   if [[ "${IS_IN_WSL}" == true && -z "${WSL_INTEROP}" ]]; then
     err "The platform is WSL1. GraphScope not support to run on WSL1, please use WSL2."
@@ -201,7 +201,7 @@ install_dependencies_k8s() {
 #   0 if start successfully, non-zero on error.
 ##########################
 start_docker() {
-  log "Starting doker daemon."
+  log "Starting docker daemon."
   # start docker daemon if docker not running.
   if ! sudo docker info >/dev/null 2>&1; then
     if [[ "${IS_IN_WSL}" = false ]]; then
@@ -214,7 +214,7 @@ start_docker() {
 }
 
 ##########################
-# Launch kubenetes cluster with kind.
+# Launch kubernetes cluster with kind.
 # Globals:
 #   None
 # Arguments:

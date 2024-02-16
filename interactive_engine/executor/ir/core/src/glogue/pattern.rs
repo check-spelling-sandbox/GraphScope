@@ -246,7 +246,7 @@ pub struct Pattern {
     max_tag_id: TagId,
 }
 
-/// Initialze a Pattern from just a single Pattern Vertex
+/// Initialize a Pattern from just a single Pattern Vertex
 impl From<PatternVertex> for Pattern {
     fn from(vertex: PatternVertex) -> Pattern {
         let vid = vertex.id;
@@ -260,7 +260,7 @@ impl From<PatternVertex> for Pattern {
     }
 }
 
-/// Initialize a Pattern from a vertor of Pattern Edges
+/// Initialize a Pattern from a vector of Pattern Edges
 impl From<Vec<PatternEdge>> for Pattern {
     fn from(edges: Vec<PatternEdge>) -> Pattern {
         let mut new_pattern = Pattern::default();
@@ -351,10 +351,10 @@ impl Pattern {
             let end_tag_v_id = end_tag.map(|tag| tag as PatternId);
             // check the end tag label is already determined or not
             let end_tag_label = end_tag_v_id.and_then(|v_id| vertex_labels_map.get(&v_id).cloned());
-            // record previous pattern edge's destinated vertex's id
+            // record previous pattern edge's destination vertex's id
             // init as start vertex's id
             let mut pre_dst_vertex_id: PatternId = start_tag_v_id;
-            // record previous pattern edge's destinated vertex's label
+            // record previous pattern edge's destination vertex's label
             // init as start vertex's label
             let mut pre_dst_vertex_label = start_tag_label;
             // find the last edge expand's index if exists;
@@ -588,7 +588,7 @@ fn build_logical_plan(
         // if expand num > 1, means it needs to add intersect operator, and reorganize nodes' children
         if edge_expands_num > 1 {
             // record the opr ids that are pre_node's children
-            let expand_chidren = get_expand_children(&expand_oprs_vec, child_offset);
+            let expand_children = get_expand_children(&expand_oprs_vec, child_offset);
             // record the opr ids that are intersect's parents
             let intersect_parents = get_intersect_parents(&expand_oprs_vec, child_offset);
             // the id of the intersect operator
@@ -597,7 +597,7 @@ fn build_logical_plan(
             let intersect_opr = exact_extend_step.generate_intersect_operator(intersect_parents.clone())?;
             append_opr(&mut match_plan, intersect_opr)?;
             // reset the children of the previous nodes before this exact extend step
-            set_node_children_at_index(&mut match_plan, expand_chidren, child_offset - 1)?;
+            set_node_children_at_index(&mut match_plan, expand_children, child_offset - 1)?;
             // reset all intersect's parents' children as the id of the intersect operator
             for parent_id in intersect_parents {
                 set_node_children_at_index(&mut match_plan, vec![intersect_id], parent_id as usize)?;

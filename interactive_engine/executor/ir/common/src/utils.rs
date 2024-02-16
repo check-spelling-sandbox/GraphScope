@@ -394,7 +394,7 @@ impl TryFrom<pb::IndexPredicate> for Vec<i64> {
             let predicate = and_predicate
                 .predicates
                 .get(0)
-                .ok_or_else(|| ParsePbError::EmptyFieldError("`AndCondition` is emtpy".to_string()))?;
+                .ok_or_else(|| ParsePbError::EmptyFieldError("`AndCondition` is empty".to_string()))?;
 
             let (key, value) = (predicate.key.as_ref(), predicate.value.as_ref());
             let key = key.ok_or_else(|| {
@@ -688,7 +688,7 @@ impl From<Object> for common_pb::Value {
                     // convert to days since from 1970-01-01
                     item: (date
                         .and_hms_opt(0, 0, 0)
-                        .unwrap() // can savely unwrap since it is valid hour/min/sec
+                        .unwrap() // can safely unwrap since it is valid hour/min/sec
                         .timestamp()
                         / 86400) as i32,
                 }),

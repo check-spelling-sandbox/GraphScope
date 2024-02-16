@@ -224,7 +224,7 @@ class Graph(_GraphBase):
     Create a graph with GraphScope graph object. First we init a GraphScope graph
     with two node labels: person and comment`
 
-    >>> g = graphscope.g(directed=False).add_vertice("persion.csv", label="person").add_vertice("comment.csv", label="comment")
+    >>> g = graphscope.g(directed=False).add_vertice("person.csv", label="person").add_vertice("comment.csv", label="comment")
 
     create a graph with g, set default_label to 'person'
 
@@ -431,7 +431,7 @@ class Graph(_GraphBase):
 
     @property
     def key(self):
-        """Key of the coresponding engine graph."""
+        """Key of the corresponding engine graph."""
         if hasattr(self, "_graph") and self._is_client_view:
             return (
                 self._graph.key
@@ -722,7 +722,7 @@ class Graph(_GraphBase):
         """Remove node n.
 
         Removes the node n and all adjacent edges.
-        Attempting to remove a non-existent node will raise an exception.
+        Attempting to remove a nonexistent node will raise an exception.
 
         Parameters
         ----------
@@ -1799,7 +1799,7 @@ class Graph(_GraphBase):
 
         Notes
         -----
-        Unlike NetowrkX return a view, here return a independent deep copy subgraph.
+        Unlike NetworkX return a view, here return a independent deep copy subgraph.
 
         Examples
         --------

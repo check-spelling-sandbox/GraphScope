@@ -282,9 +282,9 @@ def get_graph_sha256(attr):
 def check_java_app_graph_consistency(
     app_class, cpp_graph_type, java_class_template_str
 ):
-    splited = cpp_graph_type.split("<")
+    split = cpp_graph_type.split("<")
     java_app_type_params = java_class_template_str[:-1].split("<")[-1].split(",")
-    if splited[0] == "vineyard::ArrowFragment":
+    if split[0] == "vineyard::ArrowFragment":
         if app_class.find("Property") == -1:
             raise RuntimeError(
                 "Expected property app, inconsistent app and graph {}, {}".format(
@@ -294,7 +294,7 @@ def check_java_app_graph_consistency(
         if len(java_app_type_params) != 1:
             raise RuntimeError("Expected 4 type params in java app")
 
-    if splited[0] == "gs::ArrowProjectedFragment":
+    if split[0] == "gs::ArrowProjectedFragment":
         if app_class.find("Projected") == -1:
             raise RuntimeError(
                 "Expected Projected app, inconsistent app and graph {}, {}".format(
@@ -304,7 +304,7 @@ def check_java_app_graph_consistency(
         if len(java_app_type_params) != 4:
             raise RuntimeError("Expected 4 type params in java app")
 
-    graph_actual_type_params = splited[1][:-1].split(",")
+    graph_actual_type_params = split[1][:-1].split(",")
     for i in range(0, len(java_app_type_params)):
         graph_actual_type_param = graph_actual_type_params[i]
         java_app_type_param = java_app_type_params[i]
@@ -467,7 +467,7 @@ def compile_app(
         java_app_class,
     ) = _codegen_app_info(attr, DEFAULT_GS_CONFIG_FILE, java_class_path)
     logger.info(
-        "Codegened application type: %s, app header: %s, app_class: %s, vd_type: %s, md_type: %s, pregel_combine: %s, \
+        "Code generated application type: %s, app header: %s, app_class: %s, vd_type: %s, md_type: %s, pregel_combine: %s, \
             java_jar_path: %s, java_app_class: %s",
         app_type,
         app_header,
@@ -518,7 +518,7 @@ def compile_app(
         java_codegen_out_dir = os.path.join(
             workspace, f"{JAVA_CODEGEN_OUTPUT_PREFIX}-{library_name}"
         )
-        # TODO(zhanglei): Could this codegen caching happends on engine side?
+        # TODO(zhanglei): Could this codegen caching happens on engine side?
         if os.path.isdir(java_codegen_out_dir):
             logger.info(
                 "Found existing java codegen directory: %s, skipped codegen",
@@ -682,17 +682,17 @@ def compile_graph_frame(
     return lib_path, None, None, None
 
 
-def _type_param_consistent(graph_actucal_type_param, java_app_type_param):
+def _type_param_consistent(graph_actual_type_param, java_app_type_param):
     if java_app_type_param == "java.lang.Long":
-        if graph_actucal_type_param in {"uint64_t", "int64_t"}:
+        if graph_actual_type_param in {"uint64_t", "int64_t"}:
             return True
         return False
     if java_app_type_param == "java.lang.Double":
-        if graph_actucal_type_param in {"double"}:
+        if graph_actual_type_param in {"double"}:
             return True
         return False
     if java_app_type_param == "java.lang.Integer":
-        if graph_actucal_type_param in {"int32_t", "uint32_t"}:
+        if graph_actual_type_param in {"int32_t", "uint32_t"}:
             return True
         return False
     return False
@@ -896,7 +896,7 @@ def _pre_process_for_run_app_op(op, op_result_pool, key_to_op, **kwargs):
             parent_op.attr[types_pb2.E_DATA_TYPE].s.decode("utf-8", errors="ignore"),
         )
 
-        # for giraph app, we need to add args into orginal query_args, which is a json string
+        # for giraph app, we need to add args into original query_args, which is a json string
         # first one should be user params, second should be lib_path
         if app_type.startswith("giraph:"):
             user_params["app_class"] = GIRAPH_DRIVER_CLASS
@@ -1542,7 +1542,7 @@ def _parse_java_app_type(java_class_path, real_algo):
         elif line.find("ParallelAppBase") != -1:
             _java_app_type = "parallel_simple"
         elif line.find("Error") != -1:
-            raise Exception("Error occured in verifying user app")
+            raise Exception("Error occurred in verifying user app")
         elif line.find("TypeParams") != -1:
             _frag_param_str = line.split(":")[-1].strip()
         elif line.find("ContextType") != -1:
@@ -1701,7 +1701,7 @@ GRAPH_HEADER_MAP = {
     ),
 }
 
-VERETX_MAP_CLASS_MAP = {
+VERTEX_MAP_CLASS_MAP = {
     graph_def_pb2.GLOBAL_VERTEX_MAP: "vineyard::ArrowVertexMap<{},{}>",
     graph_def_pb2.LOCAL_VERTEX_MAP: "vineyard::ArrowLocalVertexMap<{},{}>",
 }
@@ -1709,7 +1709,7 @@ VERETX_MAP_CLASS_MAP = {
 
 def _codegen_graph_info(attr):
     # These getter functions are intended for lazy evaluation,
-    # cause they are not always avaiable in all types of graphs
+    # cause they are not always available in all types of graphs
     def oid_type():
         if types_pb2.OID_TYPE in attr:
             return attr[types_pb2.OID_TYPE].s.decode("utf-8", errors="ignore")
@@ -1736,7 +1736,7 @@ def _codegen_graph_info(attr):
                 return "vineyard::arrow_string_view"
             return t
 
-        return VERETX_MAP_CLASS_MAP[vm_type_enum].format(
+        return VERTEX_MAP_CLASS_MAP[vm_type_enum].format(
             internal_type(oid_type()), vid_type()
         )
 
@@ -1942,7 +1942,7 @@ class ResolveMPICmdPrefix(object):
                 else:
                     proc_num[host] = quotient
         else:
-            raise RuntimeError("The number of hosts less then num_workers")
+            raise RuntimeError("The number of hosts less than num_workers")
         return ",".join([f"{host}:{proc_num[host]}" for host in hosts])
 
     @staticmethod

@@ -140,7 +140,7 @@ class JavaContextBase : public grape::ContextBase {
  protected:
   virtual const char* evalDescriptor() = 0;
 
-  // Set frag_group_id to zero inidicate not available.
+  // Set frag_group_id to zero indicates not available.
   void init(jlong messages_addr, const char* java_message_manager_name,
             const std::string& params, const std::string& lib_path,
             int local_num = 1) {
@@ -209,7 +209,7 @@ class JavaContextBase : public grape::ContextBase {
       {
         jobject json_object = createArgsObject(env, args_str);
         // 3.1 If we find a setClassLoaderMethod, then we invoke.(NOt
-        // neccessary) this is specially for giraph adaptors
+        // necessary) this is specially for giraph adaptors
         setContextClassLoader(env, context_class);
 
         // 4. Invoke java method
@@ -220,7 +220,7 @@ class JavaContextBase : public grape::ContextBase {
           env->ExceptionClear();
           LOG(ERROR) << "Exception in context Init";
         }
-        VLOG(1) << "Successfully invokd ctx init method.";
+        VLOG(1) << "Successfully invoked ctx init method.";
         // 5. to output the result, we need the c++ context held by java
         // object.
         jfieldID inner_ctx_address_field =
@@ -279,7 +279,7 @@ class JavaContextBase : public grape::ContextBase {
     return std::string(user_class_path);
   }
   // user library name should be absolute
-  // serial path is used in graphx, to specify the path to serializaed class
+  // serial path is used in graphx, to specify the path to serialized class
   // objects of vd,ed.etc.
   std::string parseParamsAndSetupJVMEnv(const std::string& params,
                                         const std::string lib_path,
@@ -342,7 +342,7 @@ class JavaContextBase : public grape::ContextBase {
     // vineyard_id(frag_group_id)
     // pt.put("vineyard_id", frag_group_id);
 
-    // JVM runtime opt should consists of java.libaray.path and
+    // JVM runtime opt should consists of java.libarray.path and
     // java.class.path maybe this should be set by the backend not user.
     std::string grape_jvm_opt = generate_jvm_opts();
     if (!grape_jvm_opt.empty()) {
@@ -454,7 +454,7 @@ class JavaContextBase : public grape::ContextBase {
       context_object_ =
           LoadAndCreate(env, url_class_loader_object_,
                         graphx_context_name.c_str(), serial_path.c_str());
-      VLOG(1) << "Succcessfully loaded graphx context: " << context_object_;
+      VLOG(1) << "Successfully loaded graphx context: " << context_object_;
     } else {
       std::string _context_class_name_str = getCtxClassNameFromAppObject(env);
       VLOG(1) << "Context class name: " << _context_class_name_str;

@@ -41,10 +41,10 @@ fn main() {
     let config = builder.build();
     let store = Arc::new(GraphStore::open(&config, &path).unwrap());
     println!("store opened.");
-    let mut type_def_builer = TypeDefBuilder::new();
-    type_def_builer.version(1);
-    type_def_builer.add_property(1, 1, "id".to_string(), ValueType::Long, None, true, "id".to_string());
-    type_def_builer.add_property(
+    let mut type_def_builder = TypeDefBuilder::new();
+    type_def_builder.version(1);
+    type_def_builder.add_property(1, 1, "id".to_string(), ValueType::Long, None, true, "id".to_string());
+    type_def_builder.add_property(
         2,
         2,
         "name".to_string(),
@@ -53,7 +53,7 @@ fn main() {
         false,
         "name".to_string(),
     );
-    let type_def = type_def_builer.build();
+    let type_def = type_def_builder.build();
     let label_id = 1;
     store
         .create_vertex_type(1, 1, label_id, &type_def, 1)
@@ -99,7 +99,7 @@ fn main() {
         std::thread::sleep(Duration::from_secs(3));
         let total_write = total_count.load(Ordering::Relaxed);
         let write_count = total_write - tmp_count;
-        let total_time = timer.elasped_secs();
+        let total_time = timer.elapsed_secs();
         let t = total_time - tmp_time;
         println!("{:.0}\t{:.2}\t{:.0}", total_time, write_count as f64 / t, total_write);
         tmp_count = total_write;

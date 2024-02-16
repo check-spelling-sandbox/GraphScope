@@ -103,7 +103,7 @@ mod test {
             params: Some(query_params(
                 vec![CREATED_LABEL.into()],
                 vec![],
-                str_to_expr_pb("@.lange=\"Java\"".to_string()).ok(),
+                str_to_expr_pb("@.lang=\"Java\"".to_string()).ok(),
             )),
             expand_opt: 0,
             alias: None,
@@ -310,11 +310,11 @@ mod test {
         let sink = get_sink(vec![TAG_A, TAG_B, TAG_C]);
 
         let mut plan = LogicalPlan::with_root();
-        let srouce_id = plan
+        let source_id = plan
             .append_operator_as_node(source.into(), vec![0])
             .unwrap();
         let id = plan
-            .append_operator_as_node(pattern.into(), vec![srouce_id])
+            .append_operator_as_node(pattern.into(), vec![source_id])
             .unwrap();
         plan.append_operator_as_node(sink.into(), vec![id])
             .unwrap();

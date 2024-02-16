@@ -134,8 +134,8 @@ def patch_cython_codewriter(writer):  # noqa: C901
     13. Add for `visit_CascadedCmpNode` node.
         Patch for `visit_PrimaryCmpNode` node.
 
-        Examaples:
-        ----------
+        Examples:
+        ---------
 
         >>> 5 < 6 <= 7 > 4 >= 3 > 2 != 1
         >>> True
@@ -303,7 +303,7 @@ def patch_cython_codewriter(writer):  # noqa: C901
         self.startline("lambda ")
         self.comma_separated_list(node.args)
         self.put(" : ")
-        self.visit(node.retult_expr)
+        self.visit(node.result_expr)
 
     setattr(writer, "visit_LambdaNode", functools.partial(visit_LambdaNode, writer))
 

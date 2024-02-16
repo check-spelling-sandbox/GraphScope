@@ -3,7 +3,7 @@
  */
 
 /**
- * Guildelines for exception handling
+ * Guidelines for exception handling
  * 1. How to throw
  *    APSARA_THROW(the_exception_to_show, description_string)
  *    e.g. APSARA_THROW(ParameterInvalidException, "Cannot be empty string");
@@ -20,7 +20,7 @@
  * details. By default, it returns the description string when you construct the
  * exception. GetStackTrace(): call stack when the exception is thrown.
  *    ToString(): return a string describing:
- *        a) where the exception is thown (if available)
+ *        a) where the exception is thrown (if available)
  *        b) the exception class name
  *        c) the content of GetMessage
  *        d) stack trace
@@ -136,7 +136,7 @@ class ExceptionBase : public std::exception {
   virtual std::string GetMessage() const;
 
   /**
-   * With a) detailed throw location (file + lineno) (if availabe), b) Exception
+   * With a) detailed throw location (file + lineno) (if available), b) Exception
    * class name, and c) content of GetMessage() (if not empty)
    */
   /* override */ const char* what() const throw();
@@ -266,9 +266,9 @@ class FileOverwriteException : public StorageExceptionBase {
 };
 
 // when append/delete a file that being appended
-class PangunNotEnoughChunkserverExcepion : public StorageExceptionBase {
+class PangunNotEnoughChunkserverException : public StorageExceptionBase {
  public:
-  APSARA_DEFINE_EXCEPTION(PangunNotEnoughChunkserverExcepion,
+  APSARA_DEFINE_EXCEPTION(PangunNotEnoughChunkserverException,
                           StorageExceptionBase);
 };
 

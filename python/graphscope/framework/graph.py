@@ -154,7 +154,7 @@ class GraphInterface(metaclass=ABCMeta):
                 "networkx graph and graphscope graph not in the same session."
             )
         if hasattr(g, "_graph"):
-            raise TypeError("graph view can not convert to gs graph")
+            raise TypeError("graph view cannot convert to gs graph")
         return dag_utils.dynamic_to_arrow(g)
 
     def _from_vineyard(self, vineyard_object):
@@ -182,7 +182,7 @@ class GraphInterface(metaclass=ABCMeta):
         config[types_pb2.VINEYARD_ID] = utils.i_to_attr(int(vineyard_id))
         # FIXME(hetao) hardcode oid/vid type for codegen, when loading from vineyard
         #
-        # the metadata should be retrived from vineyard
+        # the metadata should be retrieved from vineyard
         config[types_pb2.OID_TYPE] = utils.s_to_attr("int64_t")
         config[types_pb2.VID_TYPE] = utils.s_to_attr("uint64_t")
         return dag_utils.create_graph(
@@ -196,7 +196,7 @@ class GraphInterface(metaclass=ABCMeta):
         config[types_pb2.VINEYARD_NAME] = utils.s_to_attr(str(vineyard_name))
         # FIXME(hetao) hardcode oid/vid type for codegen, when loading from vineyard
         #
-        # the metadata should be retrived from vineyard
+        # the metadata should be retrieved from vineyard
         config[types_pb2.OID_TYPE] = utils.s_to_attr("int64_t")
         config[types_pb2.VID_TYPE] = utils.s_to_attr("uint64_t")
         return dag_utils.create_graph(
@@ -1044,7 +1044,7 @@ class Graph(GraphInterface):
 
     @property
     def session_id(self):
-        """Get the currrent session_id.
+        """Get the current session_id.
 
         Returns:
             str: Return session id that the graph belongs to.
@@ -1052,7 +1052,7 @@ class Graph(GraphInterface):
         return self._session.session_id
 
     def detach(self):
-        """Detaching a graph makes it being left in vineyard even when the varaible for
+        """Detaching a graph makes it being left in vineyard even when the variable for
         this :class:`Graph` object leaves the lexical scope.
 
         The graph can be accessed using the graph's :code:`ObjectID` or its name later.

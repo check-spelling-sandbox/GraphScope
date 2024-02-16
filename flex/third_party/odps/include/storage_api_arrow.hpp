@@ -50,7 +50,7 @@ class ArrowClient {
    *  @brief Read one split of the read session.
    *
    *  @param request Read rows request parameters.
-   *  @param cache_size Number of not readed record baches cached in the memory.
+   *  @param cache_size Number of not read record baches cached in the memory.
    *
    *  @return Record batch reader.
    */
@@ -149,7 +149,7 @@ class Reader {
   friend class ArrowClient;
   friend class internal::ArrowStreamListener;
 
-  // the data are asyn read from the server and cached in the record_batches_
+  // the data are async read from the server and cached in the record_batches_
   BlockingQueue<std::shared_ptr<arrow::RecordBatch>> record_batches_;
   ReadRowsResp resp_;
 
@@ -173,13 +173,13 @@ class Writer {
   /**
    *  @brief Finish the write stream.
    *
-   *  @param commmit_message Returned by the server, user should bring this
+   *  @param commit_message Returned by the server, user should bring this
    * message to do the final batch commit. Note: After invoking Finish(), the
    * following invoke of Write() will fail.
    *
    *  @return Success or not.
    */
-  bool Finish(std::string& commmit_message);
+  bool Finish(std::string& commit_message);
 
   /**
    *  @brief Write one record batch.
@@ -188,7 +188,7 @@ class Writer {
    *
    *  @return Whether there is error when writing the data.
    *          Note: As the record batch is first cached in the memory and sent
-   * to server later, return true doesn't mean the data has been transfered to
+   * to server later, return true doesn't mean the data has been transferred to
    * the server.
    */
   bool Write(std::shared_ptr<arrow::RecordBatch> record_batch);
@@ -422,7 +422,7 @@ inline void Reader::ReadRowsThread(const ReadRowsReq request,
       throw std::bad_alloc();
     }
     auto buffer = std::move(result).ValueOrDie();
-    // we should guarantee the memory is valid during reocrd_batch processing
+    // we should guarantee the memory is valid during record_batch processing
     // and so copy the memory here
     memcpy(buffer->mutable_data(), data, len);
     auto status = decoder->Consume(std::move(buffer));

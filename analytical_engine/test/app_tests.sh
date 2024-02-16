@@ -346,7 +346,7 @@ function run_local_vertex_map() {
 }
 
 
-# The results of bfs and sssp_path is are non-determinstic.
+# The results of bfs and sssp_path is are non-deterministic.
 # The result of bfs is random because diamond-shaped subgraph,
 # e.g. there are four edges: 1->2, 1->3, 2->4, 3->4.
 # For vertex 4, result of bfs may come from vertex 2 or vertex 3.
@@ -448,7 +448,7 @@ then
         1 "${test_dir}/projected_property/twitter_property_v_0#header_row=True#label=v&include_all_columns=true&column_types=int64_t,std::string" \
         com.alibaba.graphscope.example.stringApp.StringApp
 
-    echo "Running girpah tests..."
+    echo "Running giraph tests..."
     ./giraph_runner --vertex_input_format_class  giraph:com.alibaba.graphscope.example.giraph.format.P2PVertexInputFormat \
       --edge_input_format_class giraph:com.alibaba.graphscope.example.giraph.format.P2PEdgeInputFormat --vfile "${test_dir}"/p2p-31.v \
       --efile "${test_dir}"/p2p-31.e --ipc_socket /tmp/vineyard.sock --lib_path /opt/graphscope/lib/libgrape-jni.so \
